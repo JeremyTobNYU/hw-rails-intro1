@@ -4,7 +4,11 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
+    puts "params: #{params.to_unsafe_h.inspect}"
+
     @all_ratings = Movie.all_ratings
+
+    # puts @sort
 
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
@@ -12,7 +16,13 @@ class MoviesController < ApplicationController
       @ratings_to_show = Movie.all_ratings
     end
 
-    @movies = Movie.with_rating(@ratings_to_show)
+    if params[:sort_by]
+      @sort = params[:sort_by].to_sym
+    else
+      @sort = :title #default sort should be title because it is the first element seen in drop down menu
+    end
+
+    @movies = Movie.with_rating(@ratings_to_show, @sort)
     # @all_ratings = @ratings_to_show
 
   end

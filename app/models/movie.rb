@@ -4,8 +4,8 @@ class Movie < ApplicationRecord
         ['G','PG','PG-13','R']
     end
 
-    def self.with_rating(ratings)
-        Movie.where(rating: ratings)
+    def self.with_rating(ratings,sort)
+        Movie.where(rating: ratings).order(sort)
     end
 
 end
